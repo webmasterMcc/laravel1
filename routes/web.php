@@ -55,7 +55,6 @@ Route::get('/jobs', function () use ($jobs) {
 */
 
 
-
 return view('jobs' , ["jobs" => $jobs]);
 });
 
