@@ -5,9 +5,62 @@ use App\Http\Controllers\MyController;
 use App\Models\marableDB;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr ;
 
 Route::get('/', function () {
     return view('home');
+});
+
+Route::get('/jobs', function () {
+    return view('jobs', [
+        'jobs' => [
+            [
+                'id' => 1,
+                'title' => 'Director',
+                'salary' => '$50,000'
+            ],
+            [
+                'id' => 2,
+                'title' => 'Programmer',
+                'salary' => '$10,000'
+            ],
+            [
+                'id' => 3,
+                'title' => 'Teacher',
+                'salary' => '$40,000'
+            ]
+        ]
+    ]);
+});
+
+Route::get('/jobs/{id}', function ($id) {
+    $jobs = [
+        [
+            'id' => 1,
+            'title' => 'Director',
+            'salary' => '$50,000'
+        ],
+        [
+            'id' => 2,
+            'title' => 'Programmer',
+            'salary' => '$10,000'
+        ],
+        [
+            'id' => 3,
+            'title' => 'Teacher',
+            'salary' => '$40,000'
+        ]
+        ];
+      $job =  Arr::first($jobs , function ($job) use ($id) {
+        return $job['id'] == $id;
+        
+       });
+     //  dd($job);
+       return view("job" , [
+        'job' => $job  ,
+        'testview' => "astronaut"  , 
+       ]);
+   // return $id ; 
 });
 
 Route::get('/about', function () {
