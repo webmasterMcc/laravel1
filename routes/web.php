@@ -46,11 +46,13 @@ return view('jobs' , ["jobs" => Job::all()   ]);
 
 Route::get('/jobs/{id}', function ($id)  {
   
-      $job =  Arr::first(Job::all(), function ($job) use ($id) {
-        return $job['id'] == $id;
+    //   $job =  Arr::first(Job::all(), function ($job) use ($id) {
+    //     return $job['id'] == $id;
         
-       });
+    //    });
      //  dd($job);
+     $job = Job::find($id);
+      
        return view("job" , [ 'job' => $job]);   
    // return $id ; 
 });

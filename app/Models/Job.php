@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr ;
 
 class Job  
 {
@@ -27,6 +27,14 @@ class Job
                     'salary' => '$40,000'
                 ]
             ];
+    }
+
+    public static function find($id){
+        $job =  Arr::first(static::all() , fn($job) => $job['id'] == $id);
+        if(!$job){
+            abort(404);
+        }
+        return $job;
     }
     
 }
