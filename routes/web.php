@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Models\marableDB;
@@ -8,30 +9,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr ;
 
 
-$jobs = [
-    [
-        'id' => 1,
-        'title' => 'Director',
-        'salary' => '$50,000'
-    ],
-    [
-        'id' => 2,
-        'title' => 'Programmer',
-        'salary' => '$10,000'
-    ],
-    [
-        'id' => 3,
-        'title' => 'Teacher',
-        'salary' => '$40,000'
-    ]
-    ];
+
 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/jobs', function () use ($jobs) {
-  
+// Route::get('/jobs', function () use ($jobs) {
+    Route::get('/jobs', function ()   {
   /*
     return view('jobs', [
         'jobs' => [
@@ -55,20 +40,18 @@ Route::get('/jobs', function () use ($jobs) {
 */
 
 
-return view('jobs' , ["jobs" => $jobs]);
+return view('jobs' , ["jobs" => Job::all()   ]);
+
 });
 
-Route::get('/jobs/{id}', function ($id) use ($jobs) {
+Route::get('/jobs/{id}', function ($id)  {
   
-      $job =  Arr::first($jobs , function ($job) use ($id) {
+      $job =  Arr::first(Job::all(), function ($job) use ($id) {
         return $job['id'] == $id;
         
        });
      //  dd($job);
-       return view("job" , [
-        'job' => $job  ,
-        'testview' => "astronaut"  , 
-       ]);
+       return view("job" , [ 'job' => $job]);   
    // return $id ; 
 });
 
