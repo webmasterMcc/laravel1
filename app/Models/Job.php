@@ -10,6 +10,8 @@ class Job
     use HasFactory;
  
     public static function all(){
+        //https://laravel.com/docs/11.x/helpers 
+        // https://laravel.com/docs/5.1/controllers
      return [
                 [
                     'id' => 1,
