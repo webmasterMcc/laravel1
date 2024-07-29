@@ -64,3 +64,24 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+// Full URL with query string
+print $request->fullUrl(); // http://127.0.0.1:8000/sometext?city=hyd
+
+// Get the path part of the URL 
+print $request->path(); // sometext
+
+// Root (protocol and domain) part of the URL)
+print $request->root(); //http://127.0.0.1:8000
+
+//Get the full URL for the previous request
+print url()->previous();
+
+//tested on Laravel 5.6
+
+//OR 
+
+use Illuminate\Support\Facades\URL;
+ 
+print URL::current();

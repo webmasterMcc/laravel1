@@ -20,3 +20,4 @@ yarn-error.log
 /.vscode
 resources/views/components/layout.blade.php
 routes/web.php
+resources/views/components/layout.blade.php
