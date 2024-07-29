@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CryptocurrencieController;
 use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
@@ -65,6 +66,26 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+
+
+Route::prefix('/crypto')->group(
+    function () {
+    
+        Route::get('/', [CryptocurrencieController::class, 'index']);
+    
+        Route::get('/bitcoin', function () {
+            return view('crypto.bitcoin');
+        });
+    
+        Route::get('/ethereum', function () {
+            return view('crypto.ethereum');
+        });
+    
+        Route::get('/litecoin', function () {
+            return view('crypto.litecoin');
+        });
+    }
+);
 
 
 
