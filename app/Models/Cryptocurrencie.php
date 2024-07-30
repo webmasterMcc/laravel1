@@ -24,10 +24,11 @@ class Cryptocurrencie extends Model
             'accept' => 'application/json',
           ],
         ]);
-        
-        echo $response->getBody();
-        
-        // Simulacion de llamada a API de precio
-      //  return rand(100, 1000);
+
+        $data = $response->getBody() ;
+        $jsonArray = json_decode($data, true);
+        //dd($jsonArray);
+        return $jsonArray;
+
     }
 }

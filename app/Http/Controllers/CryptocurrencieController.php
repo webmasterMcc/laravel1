@@ -16,8 +16,8 @@ class CryptocurrencieController extends Controller
 
         //
         return view("/crypto" , [
-            'crypto1' => $crypto ,
-             "crypto" => Cryptocurrencie::getPrice()
+            'crypto' => $crypto ,
+             "data" => Cryptocurrencie::getPrice()  ,
         ]) ;
     }
 
