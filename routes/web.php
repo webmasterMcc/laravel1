@@ -13,11 +13,11 @@ use Illuminate\Support\Arr ;
 
 
 Route::get('/', function () {
-    return view('home');
+   return view('home');
 });
 
  
-    Route::get('/jobs', function ()   {
+Route::get('/jobs', function ()   {
  
 return view('jobs' , ["jobs" => Job::all()   ]);
 

@@ -85,3 +85,18 @@ print url()->previous();
 use Illuminate\Support\Facades\URL;
  
 print URL::current();
+
+
+<!-- 
+php artisan tinker 
+commandos
+create db update db etc
+
+php artisan help make:model
+php artisan make:model Employer -m
+App\Models\Job::factory(22)->create()
+App\Models\User::factory(10)->create()
+App\Models\Job::create(['title'=> 'javascript PHP artisan' , 'salary' => 9898989]);
+App\Models\Job::find(2)
+App\Models\Job::all()
+ -->

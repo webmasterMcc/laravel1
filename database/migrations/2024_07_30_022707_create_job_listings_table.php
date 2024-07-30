@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cryptocurrencies', function (Blueprint $table) {
+        Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            // $table->unsignedBigInteger('employer_id');
+            $table->foreignIdFor(\App\Models\Employer::class);
+            $table->string('title');
+            $table->integer('salary');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cryptocurrencies');
+        Schema::dropIfExists('job_listings');
     }
 };
