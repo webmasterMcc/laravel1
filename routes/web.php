@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CryptocurrencieController;
+use App\Http\Controllers\JobFormController;
 use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
@@ -37,6 +38,17 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+// Route::get('/jobform', function () {
+//     return view('jobform');
+// });
+
+Route::get('/jobform', [JobFormController::class , 'index'] ) ;    
+
+Route::post('/jobform', [JobFormController::class , 'createNew'] )->name('jobform-submit') ;    
+
+// Route::match(['get', 'jobform'], '/', function () {
+//     // ...
+// });
 
 
 Route::prefix('/crypto')->group(
