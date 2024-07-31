@@ -15,6 +15,11 @@ class Job  extends Model
 
     protected $fillable = ['title', 'salary'];
 
+
+    public function employer(){
+        return $this->belongsTo('App\Models\Employer');
+    }
+
     public function insertData($title, $salary){
 
         if(!empty($title) && !empty($salary)){
@@ -24,13 +29,23 @@ class Job  extends Model
         }
          
     }
-    public static function find($id){
+    public static function findJob($id){
       //   App\Models\Job::find(2)
+      dd($id);
       return Job::find($id);
     }
 
     public static function create(){
        // App\Models\Job::factory(22)->create() ;
        return Job::factory(22)->create() ;
+    }
+
+
+    public function FindFirst(){
+        $job = new Job();
+        $firstJob = $job->findFirst();
+        $jobEmployerName = $job->Employer->name ; 
+        
+       // App\Models\Job::first();
     }
 }

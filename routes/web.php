@@ -6,12 +6,12 @@ use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Models\marableDB;
+use App\Models\Steps;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr ;
-
-
-
+use Illuminate\Support\Facades\Session;
+use Symfony\Component\Console\Input\Input;
 
 Route::get('/', function () {
    return view('home');
@@ -20,14 +20,17 @@ Route::get('/', function () {
  
 Route::get('/jobs', function ()   {
  
-return view('jobs' , ["jobs" => Job::all()   ]);
+return view('jobs' , [ "jobs" => Job::all()   ]);
 
 });
 
 Route::get('/jobs/{id}', function ($id)  {
- 
-    $job = Job::find($id);
-    return view("job" , [ 'job' => $job]);   
+    
+    $job = new Job();
+    // return $id ; 
+    // dd($job);
+   // return Job::find($id); 
+    return view("job" , [ 'job' => $job::find($id)]);   
 });
 
 Route::get('/about', function () {
@@ -69,13 +72,73 @@ Route::prefix('/crypto')->group(
         });
     }
 );
+ /// crypto
+
+ // steps 
+/*
+ Route::get('/steps', function () {
+    return view('steps');
+});
+*/
+Route::match(['get', 'post'], '/steps', function (request $request) {
+
+    
+    //
+     if($request->isMethod('get')){
+          // Retrieve session data if it exists
+          $data = session('data', []);
+          $totalSteps = session('totalSteps', 0);
+         return view('steps');
+
+     }elseif ($request->isMethod("post")) {
+
+        # post method...
+        $data = $request->all();
+        $steps = new Steps($data['steps']);
+        $totalSteps = $steps->calculatingSteps();
+
+        //dd($data['steps']);
+       // dd($totalSteps);
+        return redirect('/steps')
+        ->with('data', $data)
+        ->with("totalSteps", $totalSteps);
+         
+     }
 
 
+})->name('stepCalculator');
+
+ // steps 
 
 
 Route::get('/welcome', function () {
+   
     return view('welcome');
 });
+
+Route::get('/login', function () {
+    $data = Session::all();
+    $email = session('email', null);
+    $password = session('password', null);
+   // $email = Input::get('email' , null);
+
+    return view('login' , [
+        'email' => $email,
+        'password' => $password,
+        'error' => session('error', null) , 
+        'data' => $data 
+    ]);
+});
+
+Route::post('/login' , function (request $request) {
+    
+    $data = $request->all();
+   // dd($data['email']) ;
+
+    return redirect('/login')
+    ->with('data' , $data)
+    ->with('email' , $data['email']);
+})->name('loginForm');
 
 
 
