@@ -21,8 +21,11 @@ Route::get('/', function () {
 Route::get('/jobs', function ()   {
     $job = new Job();
    // $result = Job::all() ;
-   
-   $result = $job->with('employer')->get();
+
+   // tailwind pagination options :  paginate -   simplePaginate -  cursorPaginate 
+  // $result = $job->with('employer')->simplePaginate(3);
+  // $result = $job->with('employer')->cursorPaginate(3);
+  $result = $job->with('employer')->paginate(3);
 return view('jobs' , [ "jobs" =>  $result  ]);
 
 });

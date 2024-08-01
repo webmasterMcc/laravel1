@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //trigger after all the dependencies have been activated
         Model::preventLazyLoading();
-        Paginator::useBootstrapFive();
+    //    Paginator::useBootstrapFive();
     }
 }
