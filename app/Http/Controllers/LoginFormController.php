@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\loginForm;
 use Illuminate\Http\Request;
 
-class LoginForm extends Controller
+class LoginFormController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -10,7 +10,7 @@
     
      
     
-     
+     @dump($data)
     
     
     @foreach ($data as $key => $val)
