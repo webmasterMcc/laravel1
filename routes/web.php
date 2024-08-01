@@ -20,8 +20,8 @@ Route::get('/', function () {
  
 Route::get('/jobs', function ()   {
     $job = new Job();
-    $result = Job::all() ;
- //   $result = $job->with('employer')->get();
+   // $result = Job::all() ;
+   $result = $job->with('employer')->get();
 return view('jobs' , [ "jobs" =>  $result  ]);
 
 });
