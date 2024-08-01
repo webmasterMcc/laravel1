@@ -19,8 +19,10 @@ Route::get('/', function () {
 
  
 Route::get('/jobs', function ()   {
- 
-return view('jobs' , [ "jobs" => Job::all()   ]);
+    $job = new Job();
+    $result = Job::all() ;
+ //   $result = $job->with('employer')->get();
+return view('jobs' , [ "jobs" =>  $result  ]);
 
 });
 
@@ -30,7 +32,9 @@ Route::get('/jobs/{id}', function ($id)  {
     // return $id ; 
     // dd($job);
    // return Job::find($id); 
-    return view("job" , [ 'job' => $job::find($id)]);   
+    $result = $job::find($id) ; 
+   
+    return view("job" , [ 'job' => $result  ]);   
 });
 
 Route::get('/about', function () {
