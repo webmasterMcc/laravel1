@@ -25,10 +25,37 @@ Route::get('/jobs', function ()   {
    // tailwind pagination options :  paginate -   simplePaginate -  cursorPaginate 
   // $result = $job->with('employer')->simplePaginate(3);
   // $result = $job->with('employer')->cursorPaginate(3);
+
   $result = $job->with('employer')->paginate(3);
-return view('jobs' , [ "jobs" =>  $result  ]);
+return view('jobs.index' , [ "jobs" =>  $result  ]);
 
 });
+
+/// jobs create
+Route::get('/jobs/create', function () {
+  //  dd('hello world');
+    return view('jobs.create');
+} );
+
+Route::post('/jobs/create', function(request $request){
+    // $data = $request->all();
+    // dd('hello from post ' ,  $data);
+    Job::create([
+        'title' => request('title'),
+        'salary' => request('salary'),
+        'employer_id' => 1 ,
+    ]);
+
+   // dd(request("title"));
+    return redirect('/jobs');
+} )->name('jobs-create') ;
+
+
+
+
+
+
+/// jobs create
 
 Route::get('/jobs/{id}', function ($id)  {
     
@@ -38,29 +65,34 @@ Route::get('/jobs/{id}', function ($id)  {
    // return Job::find($id); 
     $result = $job::find($id) ; 
    
-    return view("job" , [ 'job' => $result  ]);   
+    return view("jobs.show" , [ 'job' => $result  ]);   
 });
 
-Route::get('/about', function () {
-    return view('about');
-});
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+
+
+
+
 
 // Route::get('/jobform', function () {
-//     return view('jobform');
-// });
-
-Route::get('/jobform', [JobFormController::class , 'index'] ) ;    
-
-Route::post('/jobform', [JobFormController::class , 'createNew'] )->name('jobform-submit') ;    
-
-// Route::match(['get', 'jobform'], '/', function () {
-//     // ...
-// });
-
+    //     return view('jobform');
+    // });
+    
+    Route::get('jobs/jobform', [JobFormController::class , 'index'] ) ;    
+    
+    Route::post('jobs/jobform', [JobFormController::class , 'createNew'] )->name('jobform-submit') ;    
+    
+    // Route::match(['get', 'jobform'], '/', function () {
+        //     // ...
+        // });
+        
+        Route::get('/about', function () {
+            return view('about');
+        });
+        
+        Route::get('/contact', function () {
+            return view('contact');
+        });
 
 Route::prefix('/crypto')->group(
     function () {

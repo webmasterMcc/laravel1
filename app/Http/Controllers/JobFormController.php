@@ -14,7 +14,7 @@ class JobFormController extends Controller
     {   
         $jobForm = new JobForm();
         //displayForm
-        return view("jobform" ) ;
+        return view("jobs/jobform" ) ;
     }
 
     /**
@@ -25,7 +25,7 @@ class JobFormController extends Controller
         //
         $jobForm = new JobForm();
        
-        return redirect("jobform")->with([ 'jobForm' => $jobForm ]) ;
+        return redirect("jobs/jobform")->with([ 'jobForm' => $jobForm ]) ;
     }
 
     /**
