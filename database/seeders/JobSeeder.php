@@ -36,6 +36,33 @@ class JobSeeder extends Seeder
               ]]
           );
 
-          Job::factory(10)->create();
+       
+
+
+
+
+          /*
+            using seed
+         php artisan migrate:fresh --seed
+        //  Job::factory(10)->create();
+        // App\Models\Employer::factory(100)->create()
+
+           Categories::factory()->create([
+            'name' => 'SQL'
+        ],[
+            'name' => 'PHP'
+        ], [
+            'name' => ' Laravel'
+        ]);
+
+
+
+
+          */
+
+
+
+
+
     }
 }

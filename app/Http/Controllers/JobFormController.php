@@ -20,11 +20,16 @@ class JobFormController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function createNew()
+    public function createNew(request $request)
     {
-        //
+        //get data
+        $data = $request->all();
+        //store data in database
+       // $jobForm = JobForm::create($data);
+        // //redirect to job form page with updated data
+        // return redirect("jobs/jobform")->with([ 'jobForm' => $jobForm ]) ;
         $jobForm = new JobForm();
-       
+        dd($jobForm->createNew($request));
         return redirect("jobs/jobform")->with([ 'jobForm' => $jobForm ]) ;
     }
 

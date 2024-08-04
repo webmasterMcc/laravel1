@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr ;
+use Illuminate\Http\Request;
 
 class Job  extends Model
 {
@@ -12,8 +13,11 @@ class Job  extends Model
   
 
     protected $table = "job_listings" ;
+     
+    //using guarded disable  for be masss assignded
+    //protected $fillable = ['title', 'salary' , 'employer_id'];
 
-    protected $fillable = ['employer_id','title', 'salary'];
+    protected $guarded = [];
 
 
     public function employer()
@@ -23,7 +27,8 @@ class Job  extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, foreignPivotKey: "job_listing_id");
+     //   return $this->belongsToMany(Tag::class, foreignPivotKey: "job_listing_id");
+     return $this->belongsTo(Employer::class);
 
     }
 
@@ -42,9 +47,19 @@ class Job  extends Model
       return Job::find($id);
     }
 
-    public static function create(){
+    public static function createJob($title,  $employer_id  , $salary  ){
        // App\Models\Job::factory(22)->create() ;
-       return Job::factory(22)->create() ;
+      // return Job::create($title, $salary , ) ;
+      
+        
+      return  Job::create([
+        'employer_id' => $employer_id ,
+        'title' => $title,
+        'salary' => $salary,
+    ]);
+      
+      // return Job::create(['title'=> $title, 'salary' =>  $salary, 'employer_id' => $employer_id]);
+      // return Job::factory(22)->create() ;
     }
 
 

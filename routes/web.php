@@ -18,45 +18,56 @@ Route::get('/', function () {
 });
 
  
-Route::get('/jobs', function ()   {
+Route::get('/jobs', function (Request $request)   {
     $job = new Job();
    // $result = Job::all() ;
-
    // tailwind pagination options :  paginate -   simplePaginate -  cursorPaginate 
   // $result = $job->with('employer')->simplePaginate(3);
   // $result = $job->with('employer')->cursorPaginate(3);
+  //dd($request->all());
 
   $result = $job->with('employer')->latest()->paginate(3);
-return view('jobs.index' , [ "jobs" =>  $result  ]);
+  return view('jobs.index' , [ "jobs" =>  $result  ]);
 
 });
+
+
 
 /// jobs create
 Route::get('/jobs/create', function () {
   //  dd('hello world');
     return view('jobs.create');
 } );
-
+/// jobs create
 Route::post('/jobs/create', function(request $request){
     // $data = $request->all();
     // dd('hello from post ' ,  $data);
-    Job::create([
-        'title' => request('title'),
-        'salary' => request('salary'),
-        'employer_id' => 1 ,
-    ]);
+    // App\Models\Job::create([
+    //     'title' => request('title'),
+    //     'salary' => request('salary'),
+    //     'employer_id' => 1 ,
+    // ]);
+    // $validatedData = $request->validate([
+    //     'title' => ['required', 'string', 'max:255'],
+    //     'salary' => ['required', 'numeric'],
+    //     'employer_id' => ['required', 'numeric'],
+    // ]);
 
-   // dd(request("title"));
+    Job::createJob(request('title') , (request('employer_id')+1) ,  request('salary') ) ;
+
+ //   dd(request("title") , request("salary"));
+    //dd(request("salary"));
     return redirect('/jobs');
 } )->name('jobs-create') ;
 
+Route::get('jobs/jobform', [JobFormController::class , 'index'] ) ;    
+Route::post('jobs/jobform', [JobFormController::class , 'createNew'] )->name('jobform-submit') ;    
 
 
 
 
 
-/// jobs create
-
+/// show jobs form
 Route::get('/jobs/{id}', function ($id)  {
     
     $job = new Job();
@@ -69,7 +80,65 @@ Route::get('/jobs/{id}', function ($id)  {
 });
 
 
+/// edit and existing job
+Route::get('/jobs/{id}/edit', function ($id)  {
+    
+    $job = new Job();
+    $result = $job::find($id) ; 
+    return view("jobs.edit" , [ 'job' => $result  ]);   
+});
 
+//UPDATE job - patch
+Route::patch('/jobs/{id}', function ($id)  {
+
+/*
+    request()->validate(
+        [
+            'title' => ['required','string','max:255'],
+           'salary' => ['required','numeric'],
+            'employer_id' => ['required','numeric'],
+        ]
+    ) ;
+
+    /*
+    //way one to update ORM database
+    
+    $job->title = request("title");
+    $job->salary = request("salary");
+    $job->save() ;
+    
+    //way one to update ORM database
+   
+    # way 2 to update data from database
+    
+*/ 
+    // request()->validate([
+    //     'title' => ['required', 'min:3'],
+    //     'salary' => ['required']
+    // ]);
+
+    // authorize (On hold...)
+
+    $job = Job::findOrFail($id);
+
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary'),
+    ]);
+
+    return redirect('/jobs/' . $job->id);  
+}); //patch
+
+///DESTROY - delete
+Route::delete('/jobs/{id}', function ($id)  {
+    // $job = new Job();
+    // $result = $job::findOrFail($id) ; 
+    // $result->delete();
+    Job::findOrFail($id)->delete();
+    return redirect('/jobs')  ;
+});
+
+///delete
 
 
 
@@ -77,11 +146,6 @@ Route::get('/jobs/{id}', function ($id)  {
 // Route::get('/jobform', function () {
     //     return view('jobform');
     // });
-    
-    Route::get('jobs/jobform', [JobFormController::class , 'index'] ) ;    
-    
-    Route::post('jobs/jobform', [JobFormController::class , 'createNew'] )->name('jobform-submit') ;    
-    
     // Route::match(['get', 'jobform'], '/', function () {
         //     // ...
         // });
